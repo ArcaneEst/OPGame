@@ -374,6 +374,7 @@ GameObject:
   - component: {fileID: 664096372}
   - component: {fileID: 664096376}
   - component: {fileID: 664096377}
+  - component: {fileID: 664096378}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -505,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35144f5f0ffe852498375ffdace36182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
 --- !u!95 &664096377
 Animator:
   serializedVersion: 3
@@ -525,6 +525,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &664096378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664096371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6050b35b943aa2b418129f4b9d28e269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  jumpSpeed: 0
+  attackRecoil: 3
+  firePoint: {fileID: 0}
+  fireballs: []
 --- !u!1 &893135424
 GameObject:
   m_ObjectHideFlags: 0
