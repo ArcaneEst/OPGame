@@ -9,8 +9,8 @@ public class PlayerMovement : MonoBehaviour
     private float beforeAttackCooldown = 0.5f;
     private float cooldownTimerBeforeAttack = 0;
 
-    [SerializeField] private float speed;
-    [SerializeField] private float jumpSpeed;
+    public float speed = 10;
+    public float jumpSpeed = 3;
     public float attackRecoil = 3;
 
     [SerializeField] private Transform firePoint;

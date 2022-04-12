@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
      private BoxCollider2D boxCollider2D;
      private Animator animator;
      
-     [SerializeField] private float speed;
+     public float speed = 20;
      
      private bool hit;
 
