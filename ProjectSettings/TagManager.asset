@@ -9,6 +9,7 @@ TagManager:
   - Turtle
   - Mine
   - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
