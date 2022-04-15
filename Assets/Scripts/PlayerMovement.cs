@@ -15,7 +15,8 @@ public class PlayerMovement : MonoBehaviour
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
     private const int MaxNumberOfFireballs = 4;
-    
+
+    private int hp = 3;
     private bool grounded;
     private int currentNumberOfFireballs = 0;
     private float cooldownTimerBeforeAttack = 0;
@@ -49,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
         var horizontal = Input.GetAxis("Horizontal");
         
         player.velocity = new Vector2(horizontal * Speed, player.velocity.y);
+        player.rotation = 0;
         
         // Flip player when moving to different directions horizontally
         if (horizontal > 0.01f)
@@ -110,12 +112,31 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground"))
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Mine"))
         {
             cooldownTimerBeforeAttack = 0;
             grounded = true;
             currentNumberOfFireballs = MaxNumberOfFireballs;
         }
+        if (col.gameObject.CompareTag("Mine"))
+        {
+            GetDamage();
+        }
+    }
+
+    private void GetDamage()
+    {
+        hp -= 1;
+        Debug.Log(hp);
+        if (hp == 0)
+        {
+            Deactivate();
+        }
+    }
+    
+    private void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 }
     
