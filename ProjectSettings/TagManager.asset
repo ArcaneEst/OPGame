@@ -8,8 +8,9 @@ TagManager:
   - Ghost
   - Turtle
   - Mine
-  - Bullet
-  - Enemy
+  - Head
+  - Ball
+  - Fireball
   layers:
   - Default
   - TransparentFX
