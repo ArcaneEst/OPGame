@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,18 +10,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject[] fireballs;
 
     private const float Speed = 10;
-    private const float JumpHeight = 10;
+    private const float JumpHeight = 15;
     private const float AttackRecoil = 3;
     
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
+    private const float CooldownTakeDamage = 2f;
     private const int MaxNumberOfFireballs = 4;
 
+    private float cooldownTimerForTakeDamage = Mathf.Infinity;
+    private float cooldownTimerForAttack = Mathf.Infinity;
+    private float cooldownTimerBeforeAttack = 0;
+    
     private int hp = 3;
     private bool grounded;
-    private int currentNumberOfFireballs = 0;
-    private float cooldownTimerBeforeAttack = 0;
-    private float cooldownTimerForAttack = Mathf.Infinity;
+    private int currentNumberOfFireballs;
 
     private void Awake()
     {
@@ -41,6 +45,7 @@ public class PlayerMovement : MonoBehaviour
             cooldownTimerBeforeAttack += Time.deltaTime;
         
         cooldownTimerForAttack += Time.deltaTime;
+        cooldownTimerForTakeDamage += Time.deltaTime;
         
         animator.SetBool("grounded", grounded);
     }
@@ -99,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
     {
         var index = FindAvailableFireballIndex();
         fireballs[index].transform.position = firePoint.position;
-        fireballs[index].GetComponent<Projectile>().Shoot();
+        fireballs[index].GetComponent<Fireball>().Shoot();
     }
     
     private int FindAvailableFireballIndex()
@@ -110,6 +115,14 @@ public class PlayerMovement : MonoBehaviour
         return 0;
     }
 
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Head"))
+        {
+            Jump();
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Mine"))
@@ -118,14 +131,18 @@ public class PlayerMovement : MonoBehaviour
             grounded = true;
             currentNumberOfFireballs = MaxNumberOfFireballs;
         }
-        if (col.gameObject.CompareTag("Mine"))
+        if (col.gameObject.CompareTag("Mine") || col.gameObject.CompareTag("Turtle") || col.gameObject.CompareTag("Ball"))
         {
-            GetDamage();
+            TakeDamage();
         }
     }
 
-    private void GetDamage()
+    private void TakeDamage()
     {
+        if (cooldownTimerForTakeDamage < CooldownTakeDamage)
+            return;
+        cooldownTimerForTakeDamage = 0;
+        
         hp -= 1;
         Debug.Log(hp);
         if (hp == 0)

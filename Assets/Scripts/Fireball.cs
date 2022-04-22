@@ -1,14 +1,13 @@
-using System;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Fireball : MonoBehaviour
 {
      private BoxCollider2D boxCollider2D;
      private Animator animator;
      
      public float speed = 20;
      
-     private bool hit;
+     private bool hit = false;
 
      private void Awake()
      {
@@ -18,9 +17,10 @@ public class Projectile : MonoBehaviour
 
      private void Update()
      {
-          if (hit) return;
-          var movementSpeed = speed * Time.deltaTime;
-          transform.Translate(0, -movementSpeed, 0); 
+          if (hit) 
+               return;
+          
+          transform.Translate(0, -speed * Time.deltaTime, 0); 
      }
 
      private void OnTriggerEnter2D(Collider2D col)
