@@ -24,7 +24,7 @@ public class Fireball : MonoBehaviour
           transform.Translate(0, -speed * Time.deltaTime, 0); 
      }
 
-     private void OnTriggerEnter2D(Collider2D col)
+     private void OnCollisionEnter2D(Collision2D col)
      {
           hit = true;
           boxCollider2D.enabled = false;
