@@ -130,10 +130,6 @@ public class PlayerMovement : MonoBehaviour
             grounded = true;
             currentNumberOfFireballs = MaxNumberOfFireballs;
         }
-        if (col.gameObject.CompareTag("Breakable"))
-        {   
-            Destroy(col.gameObject, 0.2f);
-        }
         if (col.gameObject.CompareTag("Mine") || col.gameObject.CompareTag("Turtle") || col.gameObject.CompareTag("Ball"))
         {
             TakeDamage();

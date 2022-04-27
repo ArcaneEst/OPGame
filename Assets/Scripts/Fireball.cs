@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -27,6 +28,12 @@ public class Fireball : MonoBehaviour
      {
           hit = true;
           boxCollider2D.enabled = false;
+          
+          if (col.gameObject.CompareTag("Breakable"))
+          {
+               Destroy(col.gameObject, 0.1f);
+          }
+          
           animator.SetTrigger("explode");
      }
 
