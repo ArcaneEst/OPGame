@@ -11,6 +11,7 @@ TagManager:
   - Head
   - Ball
   - Fireball
+  - Breakable
   layers:
   - Default
   - TransparentFX

@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject[] fireballs;
 
     private const float Speed = 10;
-    private const float JumpHeight = 15;
+    private const float JumpHeight = 9;
     private const float AttackRecoil = 3;
     
     private const float CooldownBetweenFireballs = 0.3f;
@@ -125,11 +125,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Mine"))
+        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Mine") || col.gameObject.CompareTag("Breakable"))
         {
             cooldownTimerBeforeAttack = 0;
             grounded = true;
             currentNumberOfFireballs = MaxNumberOfFireballs;
+        }
+        if (col.gameObject.CompareTag("Breakable"))
+        {   
+            Destroy(col.gameObject, 0.2f);
         }
         if (col.gameObject.CompareTag("Mine") || col.gameObject.CompareTag("Turtle") || col.gameObject.CompareTag("Ball"))
         {
