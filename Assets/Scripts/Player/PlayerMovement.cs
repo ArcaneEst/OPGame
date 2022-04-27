@@ -55,7 +55,6 @@ public class PlayerMovement : MonoBehaviour
         var horizontal = Input.GetAxis("Horizontal");
         
         player.velocity = new Vector2(horizontal * Speed, player.velocity.y);
-        player.rotation = 0;
         
         // Flip player when moving to different directions horizontally
         if (horizontal > 0.01f)
