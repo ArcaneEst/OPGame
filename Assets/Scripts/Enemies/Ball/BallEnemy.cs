@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class BallEnemy : MonoBehaviour
@@ -31,15 +32,18 @@ public class BallEnemy : MonoBehaviour
 
     public void TakeDamage(DamageSource damageSource)
     {
-        if (damageSource == DamageSource.Player)
+        switch (damageSource)
         {
-            Destroy(gameObject);
-        }
-        else if (damageSource == DamageSource.Fireball)
-        {
-            hp -= 1;
-            if (hp == 0)
+            case DamageSource.Player:
                 Destroy(gameObject);
+                break;
+            case DamageSource.Fireball:
+                hp -= 1;
+                if (hp == 0)
+                    Destroy(gameObject);
+                break;
+            default:
+                throw new ArgumentException($"Unknown DamageSource: {damageSource}");
         }
     }
 }
