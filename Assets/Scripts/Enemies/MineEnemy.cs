@@ -26,7 +26,7 @@ public class MineEnemy : MonoBehaviour
         body.velocity = new Vector2(speed, body.velocity.y);
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.CompareTag("Fireball"))
         {
