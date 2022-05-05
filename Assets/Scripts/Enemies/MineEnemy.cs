@@ -5,7 +5,7 @@ public class MineEnemy : MonoBehaviour
 {
     private Rigidbody2D body;
 
-    private float speed = 1;
+    private float speed = 3;
     private float timer = 0;
     private int hp = 3;
  
@@ -21,6 +21,8 @@ public class MineEnemy : MonoBehaviour
         {
             speed = -speed;
             timer = 0;
+            var spriteRenderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
         }
         
         body.velocity = new Vector2(speed, body.velocity.y);

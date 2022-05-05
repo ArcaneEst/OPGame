@@ -15,7 +15,12 @@ public class BallEnemy : MonoBehaviour
             return;
         
         var step = Speed * Time.deltaTime;
-        transform.position = Vector2.MoveTowards(transform.position, target.position, step);
+        var newPosition = Vector2.MoveTowards(transform.position, target.position, step);
+        
+        var sprite = GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        sprite.flipX = transform.position.x > newPosition.x;
+
+        transform.position = newPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
