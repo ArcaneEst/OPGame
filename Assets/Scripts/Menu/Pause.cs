@@ -37,13 +37,13 @@ public class Pause : MonoBehaviour
         if (guipuse == true)
         {
             Cursor.visible = true;
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 150f, 150f, 45f), "Продолжить"))
+            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 150f, 120f, 45f), "Продолжить"))
             {
                 ispuse = false;
                 timer = 0;
                 Cursor.visible = false;
             }
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 100, 150f, 45f), "В Меню"))
+            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 100, 120f, 45f), "В Меню"))
             {
                 ispuse = false;
                 timer = 0;

@@ -96,6 +96,9 @@ public class PlayerMovement : MonoBehaviour
             currentNumberOfFireballs -= 1;
             SendFireball();
             player.velocity = new Vector2(player.velocity.x, AttackRecoil);
+
+            var audio = GetComponent(typeof(AudioSource)) as AudioSource;
+            audio.Play();
         }
     }
 
