@@ -133,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         if (col.gameObject.CompareTag("Mine") || col.gameObject.CompareTag("Turtle") || col.gameObject.CompareTag("Ball"))
         {
             TakeDamage();
+            col.gameObject.GetComponent<IEnemy>()?.PlayAttackAnimation();
         }
     }
 
@@ -155,4 +156,3 @@ public class PlayerMovement : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-    

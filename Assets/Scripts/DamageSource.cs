@@ -1,5 +1,4 @@
-﻿
-public enum DamageSource
+﻿public enum DamageSource
 {
     Fireball, Player
 }   

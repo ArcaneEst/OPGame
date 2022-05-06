@@ -1,13 +1,20 @@
 using System;
 using UnityEngine;
 
-public class BallEnemy : MonoBehaviour
+public class BallEnemy : MonoBehaviour, IEnemy
 {
+    private Animator animator;
+
     private Transform target;
     
     private const float Speed = 1;
 
     private int hp = 3;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void Update()
     {
@@ -50,5 +57,15 @@ public class BallEnemy : MonoBehaviour
             default:
                 throw new ArgumentException($"Unknown DamageSource: {damageSource}");
         }
+    }
+
+    public void PlayAttackAnimation()   
+    {
+        animator.SetBool("ghostAttack", true);
+    }
+
+    public void EndAttackAnimation()
+    {
+        animator.SetBool("ghostAttack", false);
     }
 }

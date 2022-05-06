@@ -1,9 +1,10 @@
 using System;
 using UnityEngine;
 
-public class MineEnemy : MonoBehaviour
+public class MineEnemy : MonoBehaviour, IEnemy
 {
     private Rigidbody2D body;
+    private Animator animator;
 
     private float speed = 3;
     private float timer = 0;
@@ -12,6 +13,7 @@ public class MineEnemy : MonoBehaviour
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -41,5 +43,15 @@ public class MineEnemy : MonoBehaviour
         hp -= 1;
         if (hp == 0)
             Destroy(gameObject);
+    } 
+
+    public void PlayAttackAnimation()
+    {
+        animator.SetBool("turtleAttack", true);
+    }
+
+    public void EndAttackAnimation()
+    {
+        animator.SetBool("turtleAttack", false);
     }
 }
