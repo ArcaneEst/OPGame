@@ -6,13 +6,11 @@ TagManager:
   tags:
   - Ground
   - Head
-  - Ball
   - Fireball
   - Breakable
   - Goblin
   - Mushroom
   - Eye
-  - Turtle
   layers:
   - Default
   - TransparentFX
