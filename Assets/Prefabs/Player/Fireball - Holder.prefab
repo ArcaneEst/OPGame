@@ -146,7 +146,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945781991952831
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -311,7 +311,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782020397167
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782287839558
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -641,7 +641,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782497213411
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -806,7 +806,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782706518089
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -971,7 +971,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782763240370
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1136,7 +1136,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782856366678
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1301,7 +1301,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945782951364400
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1466,7 +1466,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945783158271363
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1631,7 +1631,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &7087945783672659020
 BoxCollider2D:
   m_ObjectHideFlags: 0
