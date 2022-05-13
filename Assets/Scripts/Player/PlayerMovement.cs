@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
     private const float CooldownTakeDamage = 2f;
-    private const int MaxNumberOfFireballs = 4;
+    private const int MaxNumberOfFireballs = 8;
 
     private float cooldownTimerForTakeDamage = Mathf.Infinity;
     private float cooldownTimerForAttack = Mathf.Infinity;
@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private int hp = 3;
     private bool grounded;
     private int currentNumberOfFireballs;
-
+    
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
@@ -97,6 +97,8 @@ public class PlayerMovement : MonoBehaviour
             SendFireball();
             player.velocity = new Vector2(player.velocity.x, AttackRecoil);
 
+            Camera.Shake(0.2f, 0.1f);
+            
             var audio = GetComponent(typeof(AudioSource)) as AudioSource;
             audio.Play();
         }
@@ -145,6 +147,9 @@ public class PlayerMovement : MonoBehaviour
         if (cooldownTimerForTakeDamage < CooldownTakeDamage)
             return;
         cooldownTimerForTakeDamage = 0;
+        
+        Camera.Shake(1, 1f);
+
         
         hp -= 1;
         Debug.Log(hp);
