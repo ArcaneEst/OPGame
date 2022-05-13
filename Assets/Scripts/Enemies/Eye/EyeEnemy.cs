@@ -32,13 +32,13 @@ public class EyeEnemy : MonoBehaviour, IEnemy
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag(Tags.Player))
             target = other.transform;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag(Tags.Player))
             target = null;
     }
 

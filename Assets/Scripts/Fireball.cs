@@ -29,7 +29,7 @@ public class Fireball : MonoBehaviour
           hit = true;
           boxCollider2D.enabled = false;
           
-          if (col.gameObject.CompareTag("Breakable"))
+          if (col.gameObject.CompareTag(Tags.Breakable))
           {
                Destroy(col.gameObject, 0.1f);
           }

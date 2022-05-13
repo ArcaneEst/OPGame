@@ -13,7 +13,7 @@ public class Camera : MonoBehaviour
     
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindWithTag(Tags.Player);
         percentComplete = 1;
         tr = GetComponent<Transform>();
         offset = tr.position - player.transform.position;

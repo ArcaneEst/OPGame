@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Head"))
+        if (col.gameObject.CompareTag(Tags.Head))
         {
             Jump();
         }
@@ -129,13 +129,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Mushroom") || col.gameObject.CompareTag("Breakable"))
+        if (col.gameObject.CompareTag(Tags.Ground) || col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Breakable))
         {
             cooldownTimerBeforeAttack = 0;
             grounded = true;
             currentNumberOfFireballs = MaxNumberOfFireballs;
         }
-        if (col.gameObject.CompareTag("Mushroom") || col.gameObject.CompareTag("Goblin") || col.gameObject.CompareTag("Eye"))
+        if (col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Goblin) || col.gameObject.CompareTag(Tags.Eye))
         {
             TakeDamage();
             col.gameObject.GetComponent<IEnemy>()?.PlayAttackAnimation();
