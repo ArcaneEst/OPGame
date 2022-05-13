@@ -34,7 +34,7 @@ public class Fireball : MonoBehaviour
                Destroy(col.gameObject, 0.1f);
           }
           
-          animator.SetTrigger("explode");
+          animator.SetTrigger(AnimationTriggers.FireballExplode);
      }
 
      public void Shoot()

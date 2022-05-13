@@ -19,11 +19,11 @@ public class GoblinEnemy : MonoBehaviour, IEnemy
     
     public void PlayAttackAnimation()   
     {
-        animator.SetBool("goblinAttack", true);
+        animator.SetBool(AnimationBools.GoblinAttack, true);
     }
 
     public void EndAttackAnimation()
     {
-        animator.SetBool("goblinAttack", false);
+        animator.SetBool(AnimationBools.GoblinAttack, false);
     }
 }

@@ -61,11 +61,11 @@ public class EyeEnemy : MonoBehaviour, IEnemy
 
     public void PlayAttackAnimation()   
     {
-        animator.SetBool("eyeAttack", true);
+        animator.SetBool(AnimationBools.EyeAttack, true);
     }
 
     public void EndAttackAnimation()
     {
-        animator.SetBool("eyeAttack", false);
+        animator.SetBool(AnimationBools.EyeAttack, false);
     }
 }

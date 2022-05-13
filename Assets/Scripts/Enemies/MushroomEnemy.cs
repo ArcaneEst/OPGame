@@ -21,20 +21,30 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
         timer += Time.deltaTime;
         if (timer > 3)
         {
-            speed = -speed;
-            timer = 0;
-            var spriteRenderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
-            spriteRenderer.flipX = !spriteRenderer.flipX;
+            ChangeMovingDirection();
         }
         
         body.velocity = new Vector2(speed, body.velocity.y);
     }
 
+    private void ChangeMovingDirection()
+    {
+        speed = -speed;
+        timer = 0;
+        var spriteRenderer = gameObject.GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
+        spriteRenderer.flipX = !spriteRenderer.flipX;
+    }
+
     private void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.tag);
         if (col.gameObject.CompareTag(Tags.Fireball))
         {
             GetDamage();
+        }
+        if (col.gameObject.CompareTag(Tags.Wall))
+        {
+            ChangeMovingDirection();
         }
     }
 
@@ -47,11 +57,11 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
 
     public void PlayAttackAnimation()
     {
-        animator.SetBool("mushroomAttack", true);
+        animator.SetBool(AnimationBools.MushroomAttack, true);
     }
 
     public void EndAttackAnimation()
     {
-        animator.SetBool("mushroomAttack", false);
+        animator.SetBool(AnimationBools.MushroomAttack, false);
     }
 }

@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         cooldownTimerForAttack += Time.deltaTime;
         cooldownTimerForTakeDamage += Time.deltaTime;
         
-        animator.SetBool("grounded", grounded);
+        animator.SetBool(AnimationBools.PlayerGrounded, grounded);
     }
 
     private void MovePlayer()
@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         else if (horizontal < -0.01f)
             transform.localScale = new Vector3(-1, 1, 1);
         
-        animator.SetBool("run", horizontal != 0);
+        animator.SetBool(AnimationBools.PlayerRun, horizontal != 0);
     }
 
     private void SpacePressed()
@@ -85,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
         player.velocity = new Vector2(player.velocity.x, JumpHeight);
         grounded = false;
         
-        animator.SetTrigger("jump");
+        animator.SetTrigger(AnimationTriggers.PlayerJump);
     }
     
     private void Attack()
