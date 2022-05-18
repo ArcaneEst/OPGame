@@ -5,6 +5,8 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
 {
     private Rigidbody2D body;
     private Animator animator;
+    
+    private Player player;
 
     private float speed = 3;
     private float timer = 0;
@@ -12,6 +14,7 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
  
     private void Awake()
     {
+        player = GameObject.FindWithTag(Tags.Player).GetComponent<Player>();
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
@@ -37,7 +40,6 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        Debug.Log(col.gameObject.tag);
         if (col.gameObject.CompareTag(Tags.Fireball))
         {
             GetDamage();
@@ -63,5 +65,6 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
     public void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.MushroomAttack, false);
+        player.TakeDamage();
     }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 public class EyeEnemy : MonoBehaviour, IEnemy
 {
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     private Transform target;
+
+    private Player player;
     
     private const float Speed = 1;
 
@@ -13,6 +16,8 @@ public class EyeEnemy : MonoBehaviour, IEnemy
 
     private void Awake()
     {
+        player = GameObject.FindWithTag(Tags.Player).GetComponent<Player>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
@@ -24,8 +29,7 @@ public class EyeEnemy : MonoBehaviour, IEnemy
         var step = Speed * Time.deltaTime;
         var newPosition = Vector2.MoveTowards(transform.position, target.position, step);
         
-        var sprite = GetComponent(typeof(SpriteRenderer)) as SpriteRenderer;
-        sprite.flipX = transform.position.x > newPosition.x;
+        spriteRenderer.flipX = transform.position.x > newPosition.x;
 
         transform.position = newPosition;
     }
@@ -67,5 +71,6 @@ public class EyeEnemy : MonoBehaviour, IEnemy
     public void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.EyeAttack, false);
+        player.TakeDamage();
     }
 }

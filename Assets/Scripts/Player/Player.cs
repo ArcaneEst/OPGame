@@ -1,10 +1,11 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
     private Rigidbody2D player;
     private Animator animator;
+    private SpriteRenderer spriteRenderer;
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireballs;
@@ -30,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     {
         player = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         currentNumberOfFireballs = MaxNumberOfFireballs;
     }
@@ -56,11 +58,7 @@ public class PlayerMovement : MonoBehaviour
         
         player.velocity = new Vector2(horizontal * Speed, player.velocity.y);
         
-        // Flip player when moving to different directions horizontally
-        if (horizontal > 0.01f)
-            transform.localScale = Vector3.one;
-        else if (horizontal < -0.01f)
-            transform.localScale = new Vector3(-1, 1, 1);
+        spriteRenderer.flipX = horizontal < -0.01f;
         
         animator.SetBool(AnimationBools.PlayerRun, horizontal != 0);
     }
@@ -137,19 +135,18 @@ public class PlayerMovement : MonoBehaviour
         }
         if (col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Goblin) || col.gameObject.CompareTag(Tags.Eye))
         {
-            TakeDamage();
+            // TakeDamage();
             col.gameObject.GetComponent<IEnemy>()?.PlayAttackAnimation();
         }
     }
 
-    private void TakeDamage()
+    public void TakeDamage()
     {
         if (cooldownTimerForTakeDamage < CooldownTakeDamage)
             return;
         cooldownTimerForTakeDamage = 0;
         
         Camera.Shake(1, 1f);
-
         
         hp -= 1;
         Debug.Log(hp);

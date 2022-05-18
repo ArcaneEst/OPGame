@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class GoblinEnemy : MonoBehaviour, IEnemy
 {
-    private Rigidbody2D body;
     private Animator animator;
+
+    private Player player;
    
     void Awake()
     {
-        body = GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag(Tags.Player).GetComponent<Player>();
         animator = GetComponent<Animator>();
     }
 
@@ -25,5 +26,6 @@ public class GoblinEnemy : MonoBehaviour, IEnemy
     public void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.GoblinAttack, false);
+        player.TakeDamage();
     }
 }
