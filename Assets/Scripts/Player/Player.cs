@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -155,9 +156,15 @@ public class Player : MonoBehaviour
             Deactivate();
         }
     }
-    
+
     private void Deactivate()
     {
+        animator.SetTrigger(AnimationTriggers.PlayerDie);
+        StartCoroutine(Deactivate(0.5f));
+    }
+    
+    private IEnumerator Deactivate(float duration) {
+        yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
     }
 }
