@@ -10,9 +10,11 @@ public class EyeEnemy : MonoBehaviour, IEnemy
 
     private Player player;
     
-    private const float Speed = 1;
+    private const float Speed = 2;
 
-    private int hp = 3;
+    private int hp = 2; 
+
+    private bool isAttacking = false;
 
     private void Awake()
     {
@@ -31,7 +33,8 @@ public class EyeEnemy : MonoBehaviour, IEnemy
         
         spriteRenderer.flipX = transform.position.x > newPosition.x;
 
-        transform.position = newPosition;
+        if (!isAttacking)
+            transform.position = newPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -66,11 +69,14 @@ public class EyeEnemy : MonoBehaviour, IEnemy
     public void PlayAttackAnimation()   
     {
         animator.SetBool(AnimationBools.EyeAttack, true);
+        isAttacking = true;
     }
 
     public void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.EyeAttack, false);
+        
         player.TakeDamage();
+        isAttacking = false;
     }
 }
