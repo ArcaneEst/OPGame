@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.TextCore;
 
 public class Player : MonoBehaviour
 {
@@ -14,18 +16,25 @@ public class Player : MonoBehaviour
     private const float Speed = 10;
     private const float JumpHeight = 9;
     private const float AttackRecoil = 3;
-    
+
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
     private const float CooldownTakeDamage = 2f;
     private const int MaxNumberOfFireballs = 8;
 
     private float cooldownTimerForTakeDamage = Mathf.Infinity;
+    private float lastY;
     private float cooldownTimerForAttack = Mathf.Infinity;
     private float cooldownTimerBeforeAttack = 0;
-    
+
     private int hp = 3;
     private bool grounded;
+    private enum Direction
+    {
+        Rigth, Left
+    }
+
+    private Direction lastDirection = Direction.Rigth;
     private int currentNumberOfFireballs;
     
     private void Awake()
@@ -40,7 +49,7 @@ public class Player : MonoBehaviour
     private void Update()
     { 
         MovePlayer();
-        
+
         if (Input.GetKey(KeyCode.Space))
             SpacePressed();
         
@@ -56,11 +65,20 @@ public class Player : MonoBehaviour
     private void MovePlayer()
     {
         var horizontal = Input.GetAxis("Horizontal");
-        
+
         player.velocity = new Vector2(horizontal * Speed, player.velocity.y);
-        
-        spriteRenderer.flipX = horizontal < -0.01f;
-        
+
+        if (horizontal < -0.01f && lastDirection == Direction.Rigth)
+        {
+            spriteRenderer.flipX = true;
+            lastDirection = Direction.Left;
+        }
+        else if (horizontal > 0.01f && lastDirection == Direction.Left)
+        {
+            spriteRenderer.flipX = false;
+            lastDirection = Direction.Rigth;
+        }
+
         animator.SetBool(AnimationBools.PlayerRun, horizontal != 0);
     }
 
@@ -160,7 +178,7 @@ public class Player : MonoBehaviour
     private void Deactivate()
     {
         animator.SetTrigger(AnimationTriggers.PlayerDie);
-        StartCoroutine(Deactivate(0.5f));
+        StartCoroutine(Deactivate(1.1f));
     }
     
     private IEnumerator Deactivate(float duration) {

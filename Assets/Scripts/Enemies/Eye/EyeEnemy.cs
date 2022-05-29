@@ -5,15 +5,11 @@ public class EyeEnemy : MonoBehaviour, IEnemy
 {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-
     private Transform target;
-
     private Player player;
     
     private const float Speed = 2;
-
-    private int hp = 2; 
-
+    private int hp = 2;
     private bool isAttacking = false;
 
     private void Awake()
