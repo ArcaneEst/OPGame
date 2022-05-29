@@ -7,10 +7,18 @@ public class Pause : MonoBehaviour
     public float timer;
     public bool ispuse;
     public bool guipuse;
+    public bool isdead;
+
+    private void Start()
+    {
+        Player.OnPlayerDeath += OnDeath;
+    }
 
     private void Update()
     {
         Time.timeScale = timer;
+        
+        
         if (Input.GetKeyDown(KeyCode.Escape) && ispuse == false)
         {
             ispuse = true;
@@ -37,18 +45,81 @@ public class Pause : MonoBehaviour
         if (guipuse == true)
         {
             Cursor.visible = true;
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 150f, 120f, 45f), "Продолжить"))
+
+            var width = Screen.width / 2;
+            var height = Screen.height / 8;
+            
+            
+            var x = Screen.width / 4;
+            var y = Screen.height / 2 - (float)(1.5 * height);
+            
+            var guiStyle = GUI.skin.button;
+            guiStyle.fontSize = 30; 
+            
+            
+            if (GUI.Button(new Rect(x, y, width, height), "Продолжить", guiStyle))
             {
                 ispuse = false;
                 timer = 0;
                 Cursor.visible = false;
             }
-            if (GUI.Button(new Rect((float)(Screen.width / 2), (float)(Screen.height / 2) - 100, 120f, 45f), "В Меню"))
+            
+            if (GUI.Button(new Rect(x, y + height, width, height), "Рестарт", guiStyle))
+            {
+                ispuse = false;
+                timer = 0;
+                Application.LoadLevel("TestLevel");
+            }
+            
+            if (GUI.Button(new Rect(x, y + 2 * height, width, height), "В Меню", guiStyle))
             {
                 ispuse = false;
                 timer = 0;
                 Application.LoadLevel("Menu");
             }
         }
+
+        if (isdead)
+        {
+            isdead = true;
+        
+            Cursor.visible = true;
+
+            var width = Screen.width / 2;
+            var height = Screen.height / 8;
+        
+        
+            var x = Screen.width / 4;
+            var y = Screen.height / 2;
+        
+            var guiStyle = GUI.skin.button;
+            guiStyle.fontSize = 30;
+
+            var labelStyle = GUI.skin.label;
+            labelStyle.fontSize = 40;
+            labelStyle.alignment = TextAnchor.UpperCenter;
+            
+            GUI.Label(new Rect(x, y, width, height), "Ты мертв", labelStyle);
+
+
+            if (GUI.Button(new Rect(x, y + 0.5f * height, width, height), "Рестарт", guiStyle))
+            {
+                ispuse = false;
+                timer = 0;
+                Application.LoadLevel("TestLevel");
+            }
+        
+            if (GUI.Button(new Rect(x, y + 1.5f * height, width, height), "В Меню", guiStyle))
+            {
+                ispuse = false;
+                timer = 0;
+                Application.LoadLevel("Menu");
+            }
+        }
+    }
+
+    private void OnDeath()
+    {
+        isdead = true;
     }
 }

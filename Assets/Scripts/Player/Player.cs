@@ -1,17 +1,22 @@
 using System;
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.TextCore;
+using Random = UnityEngine.Random;
+
 
 public class Player : MonoBehaviour
 {
+    public static event Action OnPlayerDeath;
+    
     private Rigidbody2D player;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireballs;
+    
+    [SerializeField] private RandomClip fireballClip;
+    private AudioSource fireballSound;
 
     private const float Speed = 10;
     private const float JumpHeight = 9;
@@ -20,14 +25,15 @@ public class Player : MonoBehaviour
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
     private const float CooldownTakeDamage = 2f;
-    private const int MaxNumberOfFireballs = 8;
+    [SerializeField] private int MaxNumberOfFireballs = 8;
 
     private float cooldownTimerForTakeDamage = Mathf.Infinity;
     private float lastY;
     private float cooldownTimerForAttack = Mathf.Infinity;
     private float cooldownTimerBeforeAttack = 0;
 
-    private int hp = 3;
+    [SerializeField] private int hp = 1;
+    public int CurrentHp => hp;
     private bool grounded;
     private enum Direction
     {
@@ -36,12 +42,15 @@ public class Player : MonoBehaviour
 
     private Direction lastDirection = Direction.Rigth;
     private int currentNumberOfFireballs;
+    public int CurrentNumberOfFirebolls => currentNumberOfFireballs;
     
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        fireballSound = GetComponent<AudioSource>();
+        
 
         currentNumberOfFireballs = MaxNumberOfFireballs;
     }
@@ -115,9 +124,10 @@ public class Player : MonoBehaviour
             player.velocity = new Vector2(player.velocity.x, AttackRecoil);
 
             Camera.Shake(0.2f, 0.1f);
-            
-            var audio = GetComponent(typeof(AudioSource)) as AudioSource;
-            audio.Play();
+
+            fireballSound.pitch = Random.Range(fireballClip.Pitch.min, fireballClip.Pitch.max);
+            fireballSound.volume = Random.Range(fireballClip.Volume.min, fireballClip.Volume.max);
+            fireballSound.PlayOneShot(fireballClip.Clip);
         }
     }
 
@@ -184,5 +194,6 @@ public class Player : MonoBehaviour
     private IEnumerator Deactivate(float duration) {
         yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
+        OnPlayerDeath?.Invoke();
     }
 }
