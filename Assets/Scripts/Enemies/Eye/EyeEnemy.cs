@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EyeEnemy : MonoBehaviour, IEnemy
+public class EyeEnemy : Enemy
 {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -62,17 +62,19 @@ public class EyeEnemy : MonoBehaviour, IEnemy
         }
     }
 
-    public void PlayAttackAnimation()   
+    public override void PlayAttackAnimation(Action onAnimationEnd)
     {
+        base.PlayAttackAnimation(onAnimationEnd);
         animator.SetBool(AnimationBools.EyeAttack, true);
+        
         isAttacking = true;
     }
 
-    public void EndAttackAnimation()
+    public override void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.EyeAttack, false);
+        base.EndAttackAnimation();
         
-        player.TakeDamage();
         isAttacking = false;
     }
 }

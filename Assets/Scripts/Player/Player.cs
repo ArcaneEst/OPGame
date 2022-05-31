@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         fireballSound = GetComponent<AudioSource>();
         
-
         currentNumberOfFireballs = MaxNumberOfFireballs;
     }
 
@@ -59,6 +58,8 @@ public class Player : MonoBehaviour
     { 
         MovePlayer();
 
+        UpdateTimers();
+        
         if (Input.GetKey(KeyCode.Space))
             SpacePressed();
         
@@ -91,6 +92,15 @@ public class Player : MonoBehaviour
         animator.SetBool(AnimationBools.PlayerRun, horizontal != 0);
     }
 
+    private void UpdateTimers()
+    {
+        if (!grounded)
+            cooldownTimerBeforeAttack += Time.deltaTime;
+        
+        cooldownTimerForAttack += Time.deltaTime;
+        cooldownTimerForTakeDamage += Time.deltaTime;
+    }
+
     private void SpacePressed()
     {
         if (grounded)
@@ -106,13 +116,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ShakeCamera(float duration, float power)
+    {
+        Camera.Shake(duration, power);
+    }
+
     private void Jump()
     {
         player.velocity = new Vector2(player.velocity.x, JumpHeight);
         grounded = false;
         
         animator.SetTrigger(AnimationTriggers.PlayerJump);
-    }
+    }   
     
     private void Attack()
     {
@@ -123,7 +138,7 @@ public class Player : MonoBehaviour
             SendFireball();
             player.velocity = new Vector2(player.velocity.x, AttackRecoil);
 
-            Camera.Shake(0.2f, 0.1f);
+            ShakeCamera(0.2f, 0.1f);
 
             fireballSound.pitch = Random.Range(fireballClip.Pitch.min, fireballClip.Pitch.max);
             fireballSound.volume = Random.Range(fireballClip.Volume.min, fireballClip.Volume.max);
@@ -164,18 +179,17 @@ public class Player : MonoBehaviour
         }
         if (col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Goblin) || col.gameObject.CompareTag(Tags.Eye))
         {
-            // TakeDamage();
-            col.gameObject.GetComponent<IEnemy>()?.PlayAttackAnimation();
+            col.gameObject.GetComponent<Enemy>()?.PlayAttackAnimation(TakeDamage);
         }
     }
 
-    public void TakeDamage()
+    private void TakeDamage()
     {
         if (cooldownTimerForTakeDamage < CooldownTakeDamage)
             return;
         cooldownTimerForTakeDamage = 0;
         
-        Camera.Shake(1, 1f);
+        ShakeCamera(1, 1);
         
         hp -= 1;
         Debug.Log(hp);
@@ -191,8 +205,8 @@ public class Player : MonoBehaviour
         StartCoroutine(Deactivate(1.1f));
     }
     
-    private IEnumerator Deactivate(float duration) {
-        yield return new WaitForSeconds(duration);
+    private IEnumerator Deactivate(float delay) {
+        yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
         OnPlayerDeath?.Invoke();
     }
