@@ -1,7 +1,13 @@
 ﻿public static class AnimationTriggers
 {
-    public const string PlayerJump = "playerJump";
-    public const string PlayerDie  = "playerDie";
+    public const string PlayerJump = "PlayerJump";
+    public const string PlayerDie  = "PlayerDie";
 
-    public const string FireballExplode = "fireballExplode";
+    public const string FireballExplode = "FireballExplode";
+    
+    public const string EyeDie = "EyeDie";
+    
+    public const string MushroomDie  = "MushroomDie";
+    
+    public const string GoblinDie  = "GoblinDie";
 }

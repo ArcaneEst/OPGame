@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class MushroomEnemy : Enemy
@@ -73,7 +74,13 @@ public class MushroomEnemy : Enemy
     {
         hp -= 1;
         if (hp == 0)
-            Destroy(gameObject);
+            Die();
+    }
+
+    public override void Die()
+    {
+        animator.SetTrigger(AnimationTriggers.MushroomDie);
+        OnDeath(animator.GetAnimationLength(AnimationTriggers.MushroomDie));
     }
 
     public override void PlayAttackAnimation(Action onAnimationEnd)

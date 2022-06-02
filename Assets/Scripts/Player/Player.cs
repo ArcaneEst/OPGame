@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     
     private Rigidbody2D player;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;
+    private BoxCollider2D boxCollider2D;
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireballs;
@@ -25,49 +25,43 @@ public class Player : MonoBehaviour
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
     private const float CooldownTakeDamage = 2f;
-    [SerializeField] private int MaxNumberOfFireballs = 8;
+    private const int   MaxNumberOfFireballs = 8;
 
     private float cooldownTimerForTakeDamage = Mathf.Infinity;
-    private float lastY;
     private float cooldownTimerForAttack = Mathf.Infinity;
     private float cooldownTimerBeforeAttack = 0;
 
-    [SerializeField] private int hp = 1;
-    public int CurrentHp => hp;
-    private bool grounded;
-    private enum Direction
-    {
-        Rigth, Left
-    }
+    private bool grounded = false;
 
-    private Direction lastDirection = Direction.Rigth;
-    private int currentNumberOfFireballs;
-    public int CurrentNumberOfFirebolls => currentNumberOfFireballs;
+    private int hp = 1;
+
+    public int CurrentNumberOfFireballs { get; private set; }
     
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         fireballSound = GetComponent<AudioSource>();
-        
-        currentNumberOfFireballs = MaxNumberOfFireballs;
+
+        CurrentNumberOfFireballs = MaxNumberOfFireballs;
     }
 
     private void Update()
-    { 
+    {
         MovePlayer();
-
-        UpdateTimers();
         
         if (Input.GetKey(KeyCode.Space))
             SpacePressed();
         
-        if (!grounded)
-            cooldownTimerBeforeAttack += Time.deltaTime;
+        UpdateTimers();
         
-        cooldownTimerForAttack += Time.deltaTime;
-        cooldownTimerForTakeDamage += Time.deltaTime;
+        var hit = Physics2D.BoxCast(new Vector2(player.position.x, player.position.y - 0.2f),
+            new Vector2(boxCollider2D.bounds.size.x - 0.2f, boxCollider2D.bounds.size.y - 0.2f), 
+            0, Vector2.down, 0.5f, 1 << 0);
+        grounded = hit.collider is not null;
+        // if (grounded)
+        //     Debug.Log(hit.collider);
         
         animator.SetBool(AnimationBools.PlayerGrounded, grounded);
     }
@@ -78,16 +72,10 @@ public class Player : MonoBehaviour
 
         player.velocity = new Vector2(horizontal * Speed, player.velocity.y);
 
-        if (horizontal < -0.01f && lastDirection == Direction.Rigth)
-        {
-            spriteRenderer.flipX = true;
-            lastDirection = Direction.Left;
-        }
-        else if (horizontal > 0.01f && lastDirection == Direction.Left)
-        {
-            spriteRenderer.flipX = false;
-            lastDirection = Direction.Rigth;
-        }
+        if (horizontal > 0.01f)
+            transform.localScale = Vector3.one;
+        else if (horizontal < -0.01f)
+            transform.localScale = new Vector3(-1, 1, 1);
 
         animator.SetBool(AnimationBools.PlayerRun, horizontal != 0);
     }
@@ -109,41 +97,32 @@ public class Player : MonoBehaviour
         }
         else if (cooldownTimerBeforeAttack >= CooldownBeforeAttack)
         {
-            if (currentNumberOfFireballs > 0)
+            if (CurrentNumberOfFireballs > 0 && cooldownTimerForAttack >= CooldownBetweenFireballs)
             {
+                cooldownTimerForAttack = 0;
                 Attack();
             }
         }
     }
 
-    private void ShakeCamera(float duration, float power)
-    {
-        Camera.Shake(duration, power);
-    }
-
     private void Jump()
     {
         player.velocity = new Vector2(player.velocity.x, JumpHeight);
-        grounded = false;
         
         animator.SetTrigger(AnimationTriggers.PlayerJump);
-    }   
+    }
     
     private void Attack()
     {
-        if (cooldownTimerForAttack >= CooldownBetweenFireballs)
-        {
-            cooldownTimerForAttack = 0;
-            currentNumberOfFireballs -= 1;
-            SendFireball();
-            player.velocity = new Vector2(player.velocity.x, AttackRecoil);
+        CurrentNumberOfFireballs -= 1;
+        SendFireball();
+        player.velocity = new Vector2(player.velocity.x, AttackRecoil);
 
-            ShakeCamera(0.2f, 0.1f);
+        ShakeCamera(0.2f, 0.1f);
 
-            fireballSound.pitch = Random.Range(fireballClip.Pitch.min, fireballClip.Pitch.max);
-            fireballSound.volume = Random.Range(fireballClip.Volume.min, fireballClip.Volume.max);
-            fireballSound.PlayOneShot(fireballClip.Clip);
-        }
+        fireballSound.pitch = Random.Range(fireballClip.Pitch.min, fireballClip.Pitch.max);
+        fireballSound.volume = Random.Range(fireballClip.Volume.min, fireballClip.Volume.max);
+        fireballSound.PlayOneShot(fireballClip.Clip);
     }
 
     private void SendFireball()
@@ -174,8 +153,7 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag(Tags.Ground) || col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Breakable))
         {
             cooldownTimerBeforeAttack = 0;
-            grounded = true;
-            currentNumberOfFireballs = MaxNumberOfFireballs;
+            CurrentNumberOfFireballs = MaxNumberOfFireballs;
         }
         if (col.gameObject.CompareTag(Tags.Mushroom) || col.gameObject.CompareTag(Tags.Goblin) || col.gameObject.CompareTag(Tags.Eye))
         {
@@ -192,7 +170,7 @@ public class Player : MonoBehaviour
         ShakeCamera(1, 1);
         
         hp -= 1;
-        Debug.Log(hp);
+        
         if (hp == 0)
         {
             Deactivate();
@@ -202,7 +180,7 @@ public class Player : MonoBehaviour
     private void Deactivate()
     {
         animator.SetTrigger(AnimationTriggers.PlayerDie);
-        StartCoroutine(Deactivate(1.1f));
+        StartCoroutine(Deactivate(animator.GetAnimationLength(AnimationTriggers.PlayerDie)));
     }
     
     private IEnumerator Deactivate(float delay) {
@@ -210,4 +188,6 @@ public class Player : MonoBehaviour
         gameObject.SetActive(false);
         OnPlayerDeath?.Invoke();
     }
+    
+    private void ShakeCamera(float duration, float power) => Camera.Shake(duration, power);
 }

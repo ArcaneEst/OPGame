@@ -15,9 +15,10 @@ public class GoblinEnemy : Enemy
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void TakeDamage()
+    public override void Die()
     {
-        Destroy(gameObject);
+        animator.SetTrigger(AnimationTriggers.GoblinDie);
+        OnDeath(animator.GetAnimationLength(AnimationTriggers.GoblinDie));
     }
 
     public override void PlayAttackAnimation(Action onAnimationEnd)

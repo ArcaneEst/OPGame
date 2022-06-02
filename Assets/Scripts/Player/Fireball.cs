@@ -18,7 +18,7 @@ public class Fireball : MonoBehaviour
 
      private void Update()
      {
-          if (hit) 
+          if (hit)
                return;
           
           transform.Translate(0, -speed * Time.deltaTime, 0); 
@@ -30,7 +30,7 @@ public class Fireball : MonoBehaviour
           boxCollider2D.enabled = false;
           
           if (col.gameObject.CompareTag(Tags.Breakable))
-          {
+          { 
                Destroy(col.gameObject, 0.1f);
           }
           
