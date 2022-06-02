@@ -1,20 +1,23 @@
 using System;
 using UnityEngine;
 
-public class EyeEnemy : MonoBehaviour, IEnemy
+public class EyeEnemy : Enemy
 {
+    private Rigidbody2D rigidbody2D;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Transform target;
-    private Player player;
     
     private const float Speed = 2;
     private int hp = 2;
     private bool isAttacking = false;
 
+    private float timerForAttacking = Mathf.Infinity;
+    private const float DefaultCooldown = 1;
+
     private void Awake()
     {
-        player = GameObject.FindWithTag(Tags.Player).GetComponent<Player>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
@@ -28,14 +31,18 @@ public class EyeEnemy : MonoBehaviour, IEnemy
         var newPosition = Vector2.MoveTowards(transform.position, target.position, step);
         
         spriteRenderer.flipX = transform.position.x > newPosition.x;
+        
+        timerForAttacking += Time.deltaTime;
 
-        if (!isAttacking)
+        if (!isAttacking && timerForAttacking >= DefaultCooldown)
+        {
             transform.position = newPosition;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag(Tags.Player))
+        if (timerForAttacking >= DefaultCooldown && other.gameObject.CompareTag(Tags.Player))
             target = other.transform;
     }
 
@@ -50,29 +57,39 @@ public class EyeEnemy : MonoBehaviour, IEnemy
         switch (damageSource)
         {
             case DamageSource.Player:
-                Destroy(gameObject);
+                Die();
                 break;
             case DamageSource.Fireball:
                 hp -= 1;
+                rigidbody2D.velocity = Vector2.down * 4;
                 if (hp == 0)
-                    Destroy(gameObject);
+                    Die();
                 break;
             default:
                 throw new ArgumentException($"Unknown DamageSource: {damageSource}");
         }
     }
 
-    public void PlayAttackAnimation()   
+    public override void Die()
     {
+        animator.SetTrigger(AnimationTriggers.EyeDie);
+        OnDeath(animator.GetAnimationLength(AnimationTriggers.EyeDie));
+    }
+
+    public override void PlayAttackAnimation(Action onAnimationEnd)
+    {
+        base.PlayAttackAnimation(onAnimationEnd);
         animator.SetBool(AnimationBools.EyeAttack, true);
+        
         isAttacking = true;
     }
 
-    public void EndAttackAnimation()
+    public override void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.EyeAttack, false);
+        base.EndAttackAnimation();
         
-        player.TakeDamage();
         isAttacking = false;
+        timerForAttacking = 0;
     }
 }

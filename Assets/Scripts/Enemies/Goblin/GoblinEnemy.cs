@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class GoblinEnemy : MonoBehaviour, IEnemy
+public class GoblinEnemy : Enemy
 {
     private Animator animator;
     private SpriteRenderer spriteRenderer;
@@ -15,13 +15,15 @@ public class GoblinEnemy : MonoBehaviour, IEnemy
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public void TakeDamage()
+    public override void Die()
     {
-        Destroy(gameObject);
+        animator.SetTrigger(AnimationTriggers.GoblinDie);
+        OnDeath(animator.GetAnimationLength(AnimationTriggers.GoblinDie));
     }
-    
-    public void PlayAttackAnimation()   
+
+    public override void PlayAttackAnimation(Action onAnimationEnd)
     {
+        base.PlayAttackAnimation(onAnimationEnd);
         animator.SetBool(AnimationBools.GoblinAttack, true);
         
         var xDiff = transform.position.x - player.GetComponent<Rigidbody2D>().position.x;
@@ -36,10 +38,10 @@ public class GoblinEnemy : MonoBehaviour, IEnemy
                 spriteRenderer.flipX = false;
         }
     }
-
-    public void EndAttackAnimation()
+    
+    public override void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.GoblinAttack, false);
-        player.TakeDamage();
+        base.EndAttackAnimation();
     }
 }

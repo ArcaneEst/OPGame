@@ -8,7 +8,7 @@ public class GoblinHead : MonoBehaviour
     {
         if (col.gameObject.CompareTag(Tags.Player))
         {
-            parentEnemy.GetComponent<GoblinEnemy>().TakeDamage();
+            parentEnemy.GetComponent<GoblinEnemy>().Die();
         }
     }
 }

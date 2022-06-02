@@ -1,7 +1,8 @@
 using System;
+using System.Linq;
 using UnityEngine;
 
-public class MushroomEnemy : MonoBehaviour, IEnemy
+public class MushroomEnemy : Enemy
 {
     private Rigidbody2D body;
     private Animator animator;
@@ -73,19 +74,26 @@ public class MushroomEnemy : MonoBehaviour, IEnemy
     {
         hp -= 1;
         if (hp == 0)
-            Destroy(gameObject);
-    } 
+            Die();
+    }
 
-    public void PlayAttackAnimation()
+    public override void Die()
     {
+        animator.SetTrigger(AnimationTriggers.MushroomDie);
+        OnDeath(animator.GetAnimationLength(AnimationTriggers.MushroomDie));
+    }
+
+    public override void PlayAttackAnimation(Action onAnimationEnd)
+    {
+        base.PlayAttackAnimation(onAnimationEnd);
         animator.SetBool(AnimationBools.MushroomAttack, true);
     }
 
-    public void EndAttackAnimation()
+    public override void EndAttackAnimation()
     {
         animator.SetBool(AnimationBools.MushroomAttack, false);
+        base.EndAttackAnimation();
         
-        player.TakeDamage();
         isAttacking = false;
 
         if (changedDir)

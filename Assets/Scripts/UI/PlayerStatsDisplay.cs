@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class PlayerStatsDisplay : MonoBehaviour
@@ -12,8 +8,6 @@ public class PlayerStatsDisplay : MonoBehaviour
 
     private void Update()
     {
-        var curhp = player.CurrentHp.ToString();
-        var ammo = player.CurrentNumberOfFirebolls.ToString();
-        hpText.text = $"Health: {curhp}\nAmmo: {ammo}";
+        hpText.text = player.CurrentNumberOfFireballs.ToString();
     }
 }
