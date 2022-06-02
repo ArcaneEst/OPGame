@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     
     private Rigidbody2D player;
     private Animator animator;
-    private BoxCollider2D boxCollider2D;
+    private CircleCollider2D circleCollider2D;
     
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject[] fireballs;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Rigidbody2D>();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
         fireballSound = GetComponent<AudioSource>();
 
@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
         UpdateTimers();
         
         var hit = Physics2D.BoxCast(new Vector2(player.position.x, player.position.y - 0.2f),
-            new Vector2(boxCollider2D.bounds.size.x - 0.2f, boxCollider2D.bounds.size.y - 0.2f), 
+            new Vector2(circleCollider2D.bounds.size.x - 0.2f, circleCollider2D.bounds.size.y - 0.2f), 
             0, Vector2.down, 0.5f, 1 << 0);
         grounded = hit.collider is not null;
         // if (grounded)

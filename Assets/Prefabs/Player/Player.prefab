@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5256010967781955865}
   - component: {fileID: 951954929609493272}
   - component: {fileID: 4462625860710634406}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (6)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 1202616303674172389}
   - component: {fileID: 1477074500557482741}
   - component: {fileID: 2614665039473360871}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (10)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 4174975522849675228}
   - component: {fileID: 3444510538470573249}
   - component: {fileID: 6959488871552245924}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -486,8 +486,6 @@ MonoBehaviour:
     volume:
       min: 0
       max: 0
-  MaxNumberOfFireballs: 8
-  hp: 1
 --- !u!95 &4174975522849675228
 Animator:
   serializedVersion: 4
@@ -634,7 +632,7 @@ GameObject:
   - component: {fileID: 3290311549851663973}
   - component: {fileID: 1474050086622385440}
   - component: {fileID: 1391020005733013385}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (13)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -802,7 +800,7 @@ GameObject:
   - component: {fileID: 8390020063033619913}
   - component: {fileID: 4083649988291315178}
   - component: {fileID: 3852289943563965585}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (3)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -970,7 +968,7 @@ GameObject:
   - component: {fileID: 1330922500842287653}
   - component: {fileID: 2856531904407976513}
   - component: {fileID: 4246923156299415869}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (5)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -1138,7 +1136,7 @@ GameObject:
   - component: {fileID: 3038014076556461462}
   - component: {fileID: 3619270393903810937}
   - component: {fileID: 4431180893759152583}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (15)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -1302,7 +1300,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7323606446755938485}
   - component: {fileID: 6439609230562532755}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Player Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1416,7 +1414,7 @@ GameObject:
   - component: {fileID: 26449023212678555}
   - component: {fileID: 191992684847241700}
   - component: {fileID: 919014344819280155}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -1584,7 +1582,7 @@ GameObject:
   - component: {fileID: 4331675086372706135}
   - component: {fileID: 467488109416012553}
   - component: {fileID: 4585003819564597538}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (2)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -1752,7 +1750,7 @@ GameObject:
   - component: {fileID: 5422375431963332402}
   - component: {fileID: 501799188719075286}
   - component: {fileID: 5947703181187988155}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (7)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -1915,7 +1913,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4174975522402847234}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -1951,7 +1949,7 @@ GameObject:
   - component: {fileID: 6282935498537850993}
   - component: {fileID: 4945612401699723827}
   - component: {fileID: 2071074899485517203}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (1)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2119,7 +2117,7 @@ GameObject:
   - component: {fileID: 8775278198736677797}
   - component: {fileID: 5001063722399260310}
   - component: {fileID: 5272243683808624625}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (4)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2287,7 +2285,7 @@ GameObject:
   - component: {fileID: 868209394367819280}
   - component: {fileID: 4609260096673992045}
   - component: {fileID: 8953018066111488007}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (8)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2450,7 +2448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 507642449957096464}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball - Holder
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2502,7 +2500,7 @@ GameObject:
   - component: {fileID: 3919720778856142076}
   - component: {fileID: 5283656976664346274}
   - component: {fileID: 2468952650443803674}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (12)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2670,7 +2668,7 @@ GameObject:
   - component: {fileID: 8380374342291504912}
   - component: {fileID: 3057527225468547271}
   - component: {fileID: 8746592879826927202}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (14)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -2838,7 +2836,7 @@ GameObject:
   - component: {fileID: 3813738039004102638}
   - component: {fileID: 6611303910383718809}
   - component: {fileID: 348990827560011444}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (11)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
@@ -3006,7 +3004,7 @@ GameObject:
   - component: {fileID: 6408879123299632138}
   - component: {fileID: 6082907041330252328}
   - component: {fileID: 7446086826683275568}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Fireball (9)
   m_TagString: Fireball
   m_Icon: {fileID: 0}
