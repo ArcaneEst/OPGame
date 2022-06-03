@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+class SoundSetting
+{
+    public static bool EffectsOn = true;
+    public static bool MusicOn = true;
+}
+
 public class SceneLoader : MonoBehaviour
 {
     void Update()
@@ -17,5 +23,15 @@ public class SceneLoader : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void Effects()
+    {
+        SoundSetting.EffectsOn = !SoundSetting.EffectsOn;
+    }
+    
+    public void Music()
+    {
+        SoundSetting.MusicOn = !SoundSetting.MusicOn;
     }
 }

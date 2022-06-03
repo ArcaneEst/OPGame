@@ -5,16 +5,14 @@ public class Camera : MonoBehaviour
     private GameObject player;
     private Vector3 offset;
 
-    
     private static Transform tr;
     private static float elapsed, duration, power, percentComplete;
     private static Vector3 originalPos;
 
-    
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
-        GetComponent<AudioSource>().Play();
+        if (SoundSetting.MusicOn)
+            GetComponent<AudioSource>().Play();
         player = GameObject.FindWithTag(Tags.Player);
         percentComplete = 1;
         tr = GetComponent<Transform>();
