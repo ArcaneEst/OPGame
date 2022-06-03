@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Instructions : MonoBehaviour
@@ -12,7 +11,7 @@ public class Instructions : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (timer > 7)
+        if (timer > 5)
             Destroy(gameObject);
     }
 }

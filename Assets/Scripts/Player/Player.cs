@@ -117,9 +117,9 @@ public class Player : MonoBehaviour
         CurrentNumberOfFireballs -= 1;
         SendFireball();
         player.velocity = new Vector2(player.velocity.x, AttackRecoil);
-
+        
         ShakeCamera(0.2f, 0.1f);
-
+        
         fireballSound.pitch = Random.Range(fireballClip.Pitch.min, fireballClip.Pitch.max);
         fireballSound.volume = Random.Range(fireballClip.Volume.min, fireballClip.Volume.max);
         fireballSound.PlayOneShot(fireballClip.Clip);

@@ -13,6 +13,8 @@ public class Camera : MonoBehaviour
     
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
+        GetComponent<AudioSource>().Play();
         player = GameObject.FindWithTag(Tags.Player);
         percentComplete = 1;
         tr = GetComponent<Transform>();

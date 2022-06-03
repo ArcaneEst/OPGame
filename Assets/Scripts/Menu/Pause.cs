@@ -54,7 +54,7 @@ public class Pause : MonoBehaviour
             var y = Screen.height / 2 - (float)(1.5 * height);
             
             var guiStyle = GUI.skin.button;
-            guiStyle.fontSize = 30; 
+            guiStyle.fontSize = 30;
             
             
             if (GUI.Button(new Rect(x, y, width, height), "Продолжить", guiStyle))
@@ -99,7 +99,7 @@ public class Pause : MonoBehaviour
             labelStyle.fontSize = 40;
             labelStyle.alignment = TextAnchor.UpperCenter;
             
-            GUI.Label(new Rect(x, y, width, height), "Ты мертв", labelStyle);
+            GUI.Label(new Rect(x, y, width, height), "You Died", labelStyle);
 
 
             if (GUI.Button(new Rect(x, y + 0.5f * height, width, height), "Рестарт", guiStyle))

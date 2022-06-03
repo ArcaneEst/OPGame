@@ -13,7 +13,10 @@ public class EyeEnemy : Enemy
     private bool isAttacking = false;
 
     private float timerForAttacking = Mathf.Infinity;
-    private const float DefaultCooldown = 1;
+    private const float DefaultCooldownForAttacking = 1;
+
+    private float pushbackTimer = 0;
+    private bool pushedback = false;
 
     private void Awake()
     {
@@ -34,15 +37,30 @@ public class EyeEnemy : Enemy
         
         timerForAttacking += Time.deltaTime;
 
-        if (!isAttacking && timerForAttacking >= DefaultCooldown)
+        ManagePushback();
+
+        if (!isAttacking && timerForAttacking >= DefaultCooldownForAttacking)
         {
             transform.position = newPosition;
         }
     }
 
+    private void ManagePushback()
+    {
+        if (pushedback)
+            pushbackTimer += Time.deltaTime;
+
+        if (pushbackTimer > 1)
+        {
+            pushbackTimer = 0;
+            pushedback = false;
+            rigidbody2D.velocity = Vector2.zero;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (timerForAttacking >= DefaultCooldown && other.gameObject.CompareTag(Tags.Player))
+        if (timerForAttacking >= DefaultCooldownForAttacking && other.gameObject.CompareTag(Tags.Player))
             target = other.transform;
     }
 
@@ -62,6 +80,7 @@ public class EyeEnemy : Enemy
             case DamageSource.Fireball:
                 hp -= 1;
                 rigidbody2D.velocity = Vector2.down * 4;
+                pushedback = true;
                 if (hp == 0)
                     Die();
                 break;
