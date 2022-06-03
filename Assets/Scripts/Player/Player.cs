@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private const float Speed = 10;
     private const float JumpHeight = 9;
     private const float AttackRecoil = 3;
+    private Vector3 startPosition;
 
     private const float CooldownBetweenFireballs = 0.3f;
     private const float CooldownBeforeAttack = 0.5f;
@@ -39,6 +40,7 @@ public class Player : MonoBehaviour
     
     private void Awake()
     {
+        startPosition = transform.position;
         player = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         animator = GetComponent<Animator>();
@@ -145,6 +147,11 @@ public class Player : MonoBehaviour
         if (col.gameObject.CompareTag(Tags.Head))
         {
             Jump();
+        }
+
+        if (col.gameObject.CompareTag(Tags.Finish))
+        {
+            transform.position = startPosition;
         }
     }
 

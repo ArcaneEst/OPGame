@@ -9,4 +9,5 @@
     public const string Mushroom  = "Mushroom";
     public const string Eye       = "Eye";
     public const string Wall      = "Wall";
+    public const string Finish    = "Finish";
 }
