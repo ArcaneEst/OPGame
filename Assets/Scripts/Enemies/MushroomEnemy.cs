@@ -31,7 +31,7 @@ public class MushroomEnemy : Enemy
             return;
         
         timer += Time.deltaTime;
-        if (timer > 3)
+        if (timer > 1.5f)
         {
             ChangeMovingDirection();
         }
